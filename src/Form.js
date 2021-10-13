@@ -23,6 +23,11 @@ function Form() {
         setInput('')
         e.preventDefault()
     }
+    function deleteTodo(id){
+        const updated = [...todos].filter(todo => todo.id !== id)
+        setTodos(updated)
+
+    }
 
 
     return (
@@ -48,6 +53,19 @@ function Form() {
                         
                         <li>
                             <span key={todo.id}>{todo.text}</span>
+                            <div className="button-container">
+                            <IconButton
+                                type='submit'
+                                color="primary">
+                                <EditIcon />
+                            </IconButton>
+                            <IconButton
+                                onClick={()=>deleteTodo(todo.id)}
+                                type='submit'
+                                color="error">
+                                <DeleteIcon />
+                            </IconButton>
+                            </div>
                         </li>
                     ))
                 }
