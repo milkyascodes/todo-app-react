@@ -10,6 +10,8 @@ import CloseIcon from '@mui/icons-material/Close';
 function Form() {
     const [todos, setTodos] = useState([])
     const [input, setInput] = useState('')
+    const [todoEditing, setTodoEditing] = useState(null)
+    const [inputEditing, setInputEditing] = useState('')
 
 
     function addTodo(e){
@@ -52,19 +54,56 @@ function Form() {
                     todos.map(todo =>(
                         
                         <li>
-                            <span key={todo.id}>{todo.text}</span>
+                            {todoEditing ===todo.id?
+                                (
+                                    <div className="div">
+                                        <input
+                                            type="text" 
+                                            onChange={e =>setInputEditing(e.target.value.trimStart())}
+                                            value={inputEditing}
+                                         />
+                                    </div>
+                                ):
+                                (
+                                    <span key={todo.id}>{todo.text}</span>
+                                )
+                            }
+                            
                             <div className="button-container">
-                            <IconButton
-                                type='submit'
-                                color="primary">
-                                <EditIcon />
-                            </IconButton>
-                            <IconButton
-                                onClick={()=>deleteTodo(todo.id)}
-                                type='submit'
-                                color="error">
-                                <DeleteIcon />
-                            </IconButton>
+                                {todoEditing===todo.id ? 
+                                    (
+                                        <IconButton
+                                            
+                                            color="primary">
+                                            <CheckIcon />
+                                        </IconButton>
+                                    ):
+                                    (
+                                        <IconButton
+                                            onClick={()=>setTodoEditing(todo.id)}
+                                            color="primary">
+                                            <EditIcon />
+                                        </IconButton>
+                                    )
+                                }
+                                {todoEditing===todo.id?
+                                    (
+                                        <IconButton
+                                           
+                                            color="error">
+                                            <CloseIcon />
+                                        </IconButton>
+                                    ):
+                                    (
+                                        <IconButton
+                                            onClick={()=>deleteTodo(todo.id)}
+                                            color="error">
+                                            <DeleteIcon />
+                                        </IconButton>
+                                    )
+                                }
+                            
+                            
                             </div>
                         </li>
                     ))
