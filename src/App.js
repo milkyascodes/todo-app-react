@@ -1,7 +1,9 @@
 import { Typography } from '@mui/material'
 import React from 'react'
 import Form from './Form'
+
 import './App.css'
+import Footer from './Footer'
 
 
 function App() {
@@ -11,6 +13,8 @@ function App() {
       <Typography align="center" className="sub-title"> 🔥 React 🔥 </Typography> 
 
       <Form/>
+      <Footer/>
+      
     </div>
   )
 }
