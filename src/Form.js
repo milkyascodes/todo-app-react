@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './App.css'
 import AddIcon from '@mui/icons-material/Add';
 import IconButton from '@mui/material/IconButton';
@@ -12,6 +12,19 @@ function Form() {
     const [input, setInput] = useState('')
     const [todoEditing, setTodoEditing] = useState(null)
     const [inputEditing, setInputEditing] = useState('')
+
+    useEffect(() => {
+        const todo = localStorage.getItem("todos")
+       const inStorage = JSON.parse(todo)
+       if(inStorage){
+           setTodos(inStorage)
+       }
+    }, [])
+
+    useEffect(() => {
+        const todo = JSON.stringify(todos)
+        localStorage.setItem("todos", todo)
+    }, [todos])
 
 
     function addTodo(e){
