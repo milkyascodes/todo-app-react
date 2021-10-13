@@ -28,7 +28,35 @@ function Form() {
     function deleteTodo(id){
         const updated = [...todos].filter(todo => todo.id !== id)
         setTodos(updated)
+    }
+    function editTodo(id){
+        const updated = [...todos].map((todo) =>{
+            const text = todo.text
+            if(todo.id === id){
+                todo.text=inputEditing
+                if(todo.text === ''){
+                    todo.text = text
+                }
+            }
+            return todo
+        })
+        setTodos(updated)
+        setTodoEditing(null)
+        setInputEditing('')
+       
 
+    }
+    function undoEdit(id){
+        const updated = [...todos].map((todo)=>{
+            const text = todo.text
+            if(todo.id === id){
+                todo.text = text
+            }
+            return todo
+        })
+        setTodos(updated)
+        setTodoEditing(null)
+        setInputEditing('')
     }
 
 
@@ -39,6 +67,7 @@ function Form() {
                     onChange={e =>setInput(e.target.value.trimStart())}
                     value={input}
                     type="text"
+                    autoFocus ={true}
                  />
                 <IconButton
                     type='submit'
@@ -58,6 +87,7 @@ function Form() {
                                 (
                                     <div className="div">
                                         <input
+                                            autoFocus ={true}
                                             type="text" 
                                             onChange={e =>setInputEditing(e.target.value.trimStart())}
                                             value={inputEditing}
@@ -73,7 +103,7 @@ function Form() {
                                 {todoEditing===todo.id ? 
                                     (
                                         <IconButton
-                                            
+                                            onClick={()=>editTodo(todo.id)}
                                             color="primary">
                                             <CheckIcon />
                                         </IconButton>
@@ -89,7 +119,7 @@ function Form() {
                                 {todoEditing===todo.id?
                                     (
                                         <IconButton
-                                           
+                                            onClick={()=>undoEdit(todo.id)}
                                             color="error">
                                             <CloseIcon />
                                         </IconButton>
